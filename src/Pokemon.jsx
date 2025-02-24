@@ -11,7 +11,7 @@ const Pokemon = () => {
   const fetchApi = async () => {
 
     try {
-      const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=24')
+      const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=124')
       const data = await res.json()
 
       const soloData = data.results.map(async (p) => {
