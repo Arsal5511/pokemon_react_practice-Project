@@ -1,8 +1,11 @@
-import { useState } from "react"
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
+import PokemonCard from "./PokemonCard"
+
 
 const Pokemon = () => {
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
 
   const fetchApi = async () => {
@@ -11,28 +14,43 @@ const Pokemon = () => {
       const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=24')
       const data = await res.json()
 
-     const soloData =  data.results.map(async (p) => {
+      const soloData = data.results.map(async (p) => {
         const pokFetch = await fetch(p.url)
         const abc = await pokFetch.json()
+        setLoading(false)
         return abc
 
       })
 
       const finalData = await Promise.all(soloData)
-
       setData(finalData)
-
 
     } catch (error) {
       console.log(error)
+      setError(error)
+      setLoading(false)
 
     }
   }
 
-
   useEffect(() => {
     fetchApi()
   }, [])
+
+  if(loading){
+    return(
+      <>
+      <h1>Loading</h1>
+      </>
+    )
+  }
+  if(error){
+    return(
+      <>
+      <h1>{error.message}</h1>
+      </>
+    )
+  }
   return (
     <>
       <section className="container">
@@ -42,8 +60,8 @@ const Pokemon = () => {
         <div>
           <ul className="cards">
             {
-              data.map((cur) =>{
-                return <li key={cur.id}>{cur.name}</li>
+              data.map((cur) => {
+                return <PokemonCard key={cur.id} pokemon={cur} />
               })
             }
           </ul>
