@@ -74,7 +74,7 @@
     border: none;
     outline: none;
     width: 32rem;
-    border-bottom: 0.2em solid #ff0000;
+    border-bottom: 0.2em solid #000000;
     background: rgba(#ffffff, 0.2);
     border-radius: 0.2em 0.2em 0 0;
     padding: 0.8em;
